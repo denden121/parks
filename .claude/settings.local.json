@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:marathonec.ru)",
+      "WebFetch(domain:www.mos.ru)",
+      "WebFetch(domain:academymarathon.ru)",
+      "WebFetch(domain:www.tatler.ru)",
+      "WebFetch(domain:wildteamtea.com)",
+      "WebFetch(domain:sport-marafon.ru)",
+      "WebFetch(domain:www.sportmaster.ru)",
+      "WebFetch(domain:5verst.ru)",
+      "WebFetch(domain:newrunners.ru)",
+      "WebFetch(domain:www.parkrun.ru)",
+      "WebFetch(domain:www.buro247.ru)",
+      "WebFetch(domain:www.championat.com)",
+      "WebFetch(domain:parkseason.ru)",
+      "WebFetch(domain:www.putevka.com)",
+      "WebFetch(domain:greatruns.com)"
+    ]
+  }
+}

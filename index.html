@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Парки Москвы для бега</title>
+<title>Парки Москвы для бега — 5+ км</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -24,7 +24,6 @@
     color: var(--text);
     font-family: 'IBM Plex Sans', sans-serif;
     min-height: 100vh;
-    padding: 0;
   }
 
   /* HEADER */
@@ -68,11 +67,11 @@
     color: var(--muted);
   }
 
-  /* FILTERS */
+  /* CONTROLS */
   .controls {
     padding: 20px 32px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
     align-items: center;
     border-bottom: 1px solid var(--border);
@@ -84,7 +83,7 @@
     color: var(--muted);
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-right: 4px;
+    margin-right: 2px;
   }
   .filter-btn {
     background: var(--tag-bg);
@@ -92,7 +91,7 @@
     color: var(--muted);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
-    padding: 6px 14px;
+    padding: 6px 12px;
     border-radius: 2px;
     cursor: pointer;
     transition: all 0.15s;
@@ -110,29 +109,27 @@
     color: var(--text);
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
-    padding: 6px 14px;
+    padding: 6px 12px;
     border-radius: 2px;
     cursor: pointer;
     margin-left: auto;
     outline: none;
   }
 
-  /* TABLE WRAPPER */
+  /* TABLE */
   .table-wrap {
     overflow-x: auto;
-    padding: 0 0 48px;
+    padding: 0 0 60px;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    min-width: 1100px;
+    min-width: 1200px;
   }
 
-  thead tr {
-    border-bottom: 2px solid var(--accent);
-  }
+  thead tr { border-bottom: 2px solid var(--accent); }
   thead th {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
@@ -140,44 +137,41 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--muted);
-    padding: 14px 16px;
+    padding: 14px 14px;
     text-align: left;
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
     transition: color 0.15s;
   }
   thead th:hover { color: var(--accent); }
-  thead th.sorted { color: var(--accent); }
 
   tbody tr {
     border-bottom: 1px solid var(--border);
     transition: background 0.12s;
   }
   tbody tr:hover { background: rgba(200,241,53,0.03); }
-  tbody tr.hidden { display: none; }
 
-  td {
-    padding: 14px 16px;
-    vertical-align: middle;
-  }
+  td { padding: 13px 14px; vertical-align: middle; }
 
-  /* Rank column */
   .col-rank {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 22px;
     color: var(--border);
-    width: 44px;
+    width: 40px;
     text-align: center;
   }
   tr:hover .col-rank { color: var(--accent); }
 
-  /* Name */
   .col-name {
     font-weight: 600;
     font-size: 13px;
     color: #fff;
-    min-width: 180px;
+    min-width: 190px;
     line-height: 1.3;
   }
   .col-name small {
@@ -189,36 +183,49 @@
     font-family: 'IBM Plex Mono', monospace;
   }
 
-  /* District badge */
   .badge {
     display: inline-block;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
-    padding: 3px 8px;
+    padding: 3px 7px;
     border-radius: 2px;
     white-space: nowrap;
     letter-spacing: 0.5px;
   }
-  .badge-w  { background: rgba(100,180,255,0.12); color: #64b4ff; border: 1px solid rgba(100,180,255,0.2); }
-  .badge-sw { background: rgba(180,120,255,0.12); color: #b478ff; border: 1px solid rgba(180,120,255,0.2); }
-  .badge-c  { background: rgba(255,180,50,0.12);  color: #ffb432; border: 1px solid rgba(255,180,50,0.2); }
-  .badge-n  { background: rgba(50,220,130,0.12);  color: #32dc82; border: 1px solid rgba(50,220,130,0.2); }
-  .badge-e  { background: rgba(255,100,80,0.12);  color: #ff6450; border: 1px solid rgba(255,100,80,0.2); }
-  .badge-mo { background: rgba(200,241,53,0.10);  color: var(--accent); border: 1px solid rgba(200,241,53,0.2); }
+  .badge-cao  { background: rgba(255,180,50,0.12);  color: #ffb432; border: 1px solid rgba(255,180,50,0.2); }
+  .badge-zao  { background: rgba(100,180,255,0.12); color: #64b4ff; border: 1px solid rgba(100,180,255,0.2); }
+  .badge-szao { background: rgba(180,120,255,0.12); color: #b478ff; border: 1px solid rgba(180,120,255,0.2); }
+  .badge-uzao { background: rgba(180,120,255,0.12); color: #b478ff; border: 1px solid rgba(180,120,255,0.2); }
+  .badge-sao  { background: rgba(50,220,130,0.12);  color: #32dc82; border: 1px solid rgba(50,220,130,0.2); }
+  .badge-svao { background: rgba(50,220,130,0.12);  color: #32dc82; border: 1px solid rgba(50,220,130,0.2); }
+  .badge-vao  { background: rgba(255,100,80,0.12);  color: #ff6450; border: 1px solid rgba(255,100,80,0.2); }
+  .badge-uvao { background: rgba(255,100,80,0.12);  color: #ff6450; border: 1px solid rgba(255,100,80,0.2); }
+  .badge-yao  { background: rgba(255,160,60,0.12);  color: #ffa03c; border: 1px solid rgba(255,160,60,0.2); }
 
-  /* Distance km */
   .col-dist {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
-    color: var(--text);
     white-space: nowrap;
   }
   .dist-val { color: #fff; font-weight: 500; }
 
-  /* Score bars */
-  .score-cell { min-width: 90px; }
+  .km-cell {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    white-space: nowrap;
+    min-width: 70px;
+  }
+  .km-cell span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .score-cell { min-width: 110px; }
   .score-bar {
-    height: 4px;
+    height: 3px;
     border-radius: 2px;
     background: var(--border);
     margin-top: 5px;
@@ -228,24 +235,15 @@
     height: 100%;
     border-radius: 2px;
     background: var(--accent);
-    transition: width 0.4s ease;
   }
   .score-num {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--text);
-  }
-
-  /* Stars */
-  .stars {
-    color: var(--accent);
     font-size: 11px;
-    letter-spacing: 1px;
+    color: var(--text);
+    line-height: 1.3;
   }
-  .stars-empty { color: var(--border); }
 
-  /* Tags */
-  .tags { display: flex; gap: 5px; flex-wrap: wrap; min-width: 130px; }
+  .tags { display: flex; gap: 4px; flex-wrap: wrap; min-width: 150px; }
   .tag {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 9px;
@@ -255,40 +253,18 @@
     border: 1px solid var(--border);
     color: var(--muted);
     white-space: nowrap;
-    letter-spacing: 0.3px;
   }
   .tag-good { border-color: rgba(200,241,53,0.3); color: var(--accent); background: rgba(200,241,53,0.05); }
   .tag-warn { border-color: rgba(255,107,53,0.3); color: var(--accent2); background: rgba(255,107,53,0.05); }
+  .tag-club { border-color: rgba(100,180,255,0.3); color: #64b4ff; background: rgba(100,180,255,0.05); }
 
-  /* Total score highlight */
   .total-score {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
+    font-size: 28px;
     color: var(--accent);
     line-height: 1;
   }
 
-  /* Legend */
-  .legend {
-    padding: 20px 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-  }
-
-  /* Sticky header */
-  thead th { position: sticky; top: 0; background: var(--bg); z-index: 10; }
-
-  /* Count */
   .count-info {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
@@ -298,7 +274,32 @@
   }
   .count-info span { color: var(--accent); }
 
-  @media (max-width: 600px) {
+  .notes-cell {
+    font-size: 11px;
+    color: var(--muted);
+    max-width: 220px;
+    line-height: 1.45;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .legend {
+    padding: 20px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
     .header, .controls, .legend, .count-info { padding-left: 16px; padding-right: 16px; }
     h1 { font-size: 38px; }
   }
@@ -307,29 +308,31 @@
 <body>
 
 <div class="header">
-  <div class="header-label">📍 Москва / Подмосковье — апрель 2026</div>
+  <div class="header-label">Москва — апрель 2026 — маршруты 5+ км</div>
   <h1>ПАРКИ<br><span>ДЛЯ БЕГА</span></h1>
-  <div class="header-meta">20 локаций · сравнительный анализ · рейтинг бегуна</div>
+  <div class="header-meta">27 парков и локаций · дистанции 5–50+ км · все округа</div>
 </div>
 
 <div class="controls">
   <span class="filter-label">Округ:</span>
   <button class="filter-btn active" data-filter="all">Все</button>
+  <button class="filter-btn" data-filter="ЦАО">ЦАО</button>
   <button class="filter-btn" data-filter="ЗАО">ЗАО</button>
   <button class="filter-btn" data-filter="ЮЗАО">ЮЗАО</button>
-  <button class="filter-btn" data-filter="ЦАО">ЦАО</button>
   <button class="filter-btn" data-filter="САО">САО</button>
+  <button class="filter-btn" data-filter="СЗАО">СЗАО</button>
   <button class="filter-btn" data-filter="ВАО">ВАО</button>
-  <button class="filter-btn" data-filter="МО">Подмосковье</button>
+  <button class="filter-btn" data-filter="СВАО">СВАО</button>
+  <button class="filter-btn" data-filter="ЮАО">ЮАО</button>
+  <button class="filter-btn" data-filter="ЮВАО">ЮВАО</button>
   <select class="sort-select" id="sortSelect">
     <option value="rank">По рангу</option>
-    <option value="score">По рейтингу бегуна</option>
-    <option value="dist">По удалённости</option>
-    <option value="cover">По км дорожек</option>
+    <option value="dist">По км маршрута ↓</option>
+    <option value="score">По рейтингу ↓</option>
   </select>
 </div>
 
-<div class="count-info">Показано: <span id="countShown">20</span> из 20 парков</div>
+<div class="count-info">Показано: <span id="countShown">27</span> из 27 парков</div>
 
 <div class="table-wrap">
 <table id="mainTable">
@@ -337,16 +340,14 @@
   <tr>
     <th>#</th>
     <th>Название</th>
-    <th>Округ</th>
-    <th data-sort="dist">От центра ↕</th>
-    <th data-sort="cover">Дорожки ↕</th>
-    <th data-sort="surface">Покрытие ↕</th>
-    <th data-sort="relief">Рельеф ↕</th>
-    <th data-sort="crowd">Людно ↕</th>
-    <th data-sort="light">Освещ. ↕</th>
-    <th data-sort="nature">Природа ↕</th>
-    <th>Особенности</th>
-    <th data-sort="score">★ Рейтинг</th>
+    <th>Округ / район</th>
+    <th data-sort="dist">Осн. маршрут</th>
+    <th>Покрытие</th>
+    <th>Рельеф</th>
+    <th>Освещение</th>
+    <th>Особенности и заметки</th>
+    <th>Теги</th>
+    <th data-sort="score">Рейтинг</th>
   </tr>
 </thead>
 <tbody id="tableBody">
@@ -355,368 +356,522 @@
 </div>
 
 <div class="legend">
-  <div class="legend-item"><span class="badge badge-w">ЗАО</span> Западный</div>
-  <div class="legend-item"><span class="badge badge-sw">ЮЗАО</span> Юго-Западный</div>
-  <div class="legend-item"><span class="badge badge-c">ЦАО</span> Центральный</div>
-  <div class="legend-item"><span class="badge badge-n">САО</span> Северный</div>
-  <div class="legend-item"><span class="badge badge-e">ВАО</span> Восточный</div>
-  <div class="legend-item"><span class="badge badge-mo">МО</span> Подмосковье</div>
-  <div class="legend-item"><span class="tag tag-good">тег</span> плюс для бегуна</div>
-  <div class="legend-item"><span class="tag tag-warn">тег</span> предупреждение</div>
-  <div class="legend-item">Рейтинг: 1–10 · среднее по 5 критериям</div>
+  <div class="legend-item"><span class="badge badge-cao">ЦАО</span> Центральный</div>
+  <div class="legend-item"><span class="badge badge-zao">ЗАО</span> Западный</div>
+  <div class="legend-item"><span class="badge badge-szao">ЮЗАО</span> Юго-Западный</div>
+  <div class="legend-item"><span class="badge badge-sao">САО</span> Северный</div>
+  <div class="legend-item"><span class="badge badge-sao">СЗАО</span> Северо-Западный</div>
+  <div class="legend-item"><span class="badge badge-vao">ВАО</span> Восточный</div>
+  <div class="legend-item"><span class="badge badge-svao">СВАО</span> Северо-Восточный</div>
+  <div class="legend-item"><span class="badge badge-yao">ЮАО</span> Южный</div>
+  <div class="legend-item"><span class="badge badge-uvao">ЮВАО</span> Юго-Восточный</div>
+  <div class="legend-item" style="margin-left:8px"><span class="tag tag-good">плюс</span> достоинство</div>
+  <div class="legend-item"><span class="tag tag-warn">минус</span> ограничение</div>
+  <div class="legend-item"><span class="tag tag-club">клуб</span> беговой клуб / «5 вёрст»</div>
 </div>
 
 <script>
 const parks = [
+  // ==================== ЦАО ====================
   {
     rank: 1,
-    name: "Парк Олимпийской деревни",
-    sub: "Тропарёво-Никулино",
-    district: "ЗАО",
-    distKm: 13,
-    coverKm: "8 км",
-    coverVal: 8,
-    surface: 9,   surfaceLbl: "Асфальт + грунт",
-    relief: 8,    reliefLbl: "Холмистый",
-    crowd: 8,     crowdLbl: "Тихо",
-    light: 7,     lightLbl: "Частично",
-    nature: 9,    natureLbl: "Озеро, лес",
-    tags: [{t:"петляющий трейл",g:true},{t:"озеро в центре",g:true},{t:"мало людей",g:true}],
+    name: "Парк Горького",
+    sub: "ЦПКиО им. М. Горького",
+    district: "ЦАО",
+    distKm: 4.8,
+    distLbl: "4,8 км",
+    surface: "Асфальт / резиновое покрытие",
+    relief: "Плоский",
+    light: "Круглосуточно",
+    notes: "Петля по набережным (Крымская–Пушкинская–Андреевская–Воробьёвская) ~8 км. Фиксированные метки через 100 м. Nike Running Club проводит тренировки. «5 вёрст» Парк Горького каждую субботу. Закрыт по понедельникам.",
+    tags: [
+      {t:"беговое покрытие",g:true},{t:"Nike Running Club",c:true},{t:"«5 вёрст»",c:true},
+      {t:"метки через 100 м",g:true},{t:"раздевалки RunLab",g:true},{t:"очень людно",w:true},{t:"закрыт по пн",w:true}
+    ],
     score: 8.2
   },
   {
     rank: 2,
-    name: "Парк Фили",
-    sub: "Фили-Давыдково",
-    district: "ЗАО",
-    distKm: 9,
-    coverKm: "12 км",
-    coverVal: 12,
-    surface: 8,   surfaceLbl: "Асфальт + набережная",
-    relief: 6,    reliefLbl: "Ровный/спуски",
-    crowd: 5,     crowdLbl: "Многолюдно",
-    light: 8,     lightLbl: "Хорошее",
-    nature: 8,    natureLbl: "Река, деревья",
-    tags: [{t:"набережная Москвы-реки",g:true},{t:"велодорожка",g:true},{t:"пляж летом",g:true},{t:"выходные — людно",g:false}],
-    score: 7.9
-  },
-  {
-    rank: 3,
-    name: "Филёвский парк",
-    sub: "Фили",
-    district: "ЗАО",
-    distKm: 7,
-    coverKm: "6 км",
-    coverVal: 6,
-    surface: 7,   surfaceLbl: "Асфальт",
-    relief: 5,    reliefLbl: "Пологий",
-    crowd: 6,     crowdLbl: "Умеренно",
-    light: 7,     lightLbl: "Есть",
-    nature: 7,    natureLbl: "Пруд, аллеи",
-    tags: [{t:"метро Фили",g:true},{t:"вид на реку",g:true},{t:"узкие дорожки",g:false}],
-    score: 6.9
-  },
-  {
-    rank: 4,
-    name: "Парк 50-летия Октября",
-    sub: "Проспект Вернадского",
-    district: "ЗАО",
-    distKm: 10,
-    coverKm: "5 км",
-    coverVal: 5,
-    surface: 8,   surfaceLbl: "Асфальт",
-    relief: 6,    reliefLbl: "Пологий",
-    crowd: 7,     crowdLbl: "Тихо",
-    light: 7,     lightLbl: "Частично",
-    nature: 7,    natureLbl: "Пруд, зелень",
-    tags: [{t:"беговые дорожки",g:true},{t:"workout-зона",g:true},{t:"бесплатный",g:true}],
-    score: 7.0
-  },
-  {
-    rank: 5,
-    name: "Воронцовский парк",
-    sub: "Северное Бутово",
-    district: "ЮЗАО",
-    distKm: 14,
-    coverKm: "7 км",
-    coverVal: 7,
-    surface: 8,   surfaceLbl: "Асфальт + грунт",
-    relief: 7,    reliefLbl: "Холмистый",
-    crowd: 7,     crowdLbl: "Умеренно",
-    light: 7,     lightLbl: "Хорошее",
-    nature: 8,    natureLbl: "Пруды, усадьба",
-    tags: [{t:"усадьба XVI в.",g:true},{t:"пруды",g:true},{t:"тропинки в лесу",g:true}],
+    name: "Нескучный сад",
+    sub: "Ленинский просп. / ЦАО",
+    district: "ЦАО",
+    distKm: 5,
+    distLbl: "5 км",
+    surface: "Грунт + асфальт",
+    relief: "Холмы и спуски",
+    light: "Частично",
+    notes: "Входит в состав Парка Горького. Маршрут ~5 км по пересечённой местности с перепадами высот; старт у Зелёного театра. Менее людный аналог Горького. Исторический парк XVIII в., овраги, старые деревья.",
+    tags: [
+      {t:"холмистый рельеф",g:true},{t:"старый лес",g:true},{t:"малолюдно",g:true},
+      {t:"часть Парка Горького",g:true}
+    ],
     score: 7.5
   },
   {
+    rank: 3,
+    name: "Лужники (набережная)",
+    sub: "Хамовники, ЦАО",
+    district: "ЦАО",
+    distKm: 5,
+    distLbl: "5 км (петля)",
+    surface: "Резиновое / асфальт",
+    relief: "Плоский",
+    light: "Круглосуточно",
+    notes: "Выделенная беговая дорожка 2,7 км вдоль Лужнецкой набережной с резиновым покрытием олимпийского класса; метки каждые 100 м. Петля вокруг стадиона ~5 км. Раздевалки и душ у RunLab (ст. м. Спортивная). 400-метровые дорожки у малых арен.",
+    tags: [
+      {t:"олимпийское покрытие",g:true},{t:"метки через 100 м",g:true},
+      {t:"RunLab — раздевалки",g:true},{t:"без светофоров",g:true},
+      {t:"вечером — многолюдно",w:true}
+    ],
+    score: 8.0
+  },
+  {
+    rank: 4,
+    name: "Воробьёвы горы",
+    sub: "Природный заказник / ЦАО–ЗАО",
+    district: "ЦАО",
+    distKm: 8,
+    distLbl: "8 км (набережная–лес)",
+    surface: "Гравий, асфальт, деревянные настилы, резиновый трек",
+    relief: "Крутые подъёмы и спуски",
+    light: "Есть на набережной",
+    notes: "Маршрут вдоль набережной Москвы-реки (Воробьёвская набережная) ~4 км в одну сторону; подъёмы на гору — отличная силовая тренировка. Вниз — резиновый беговой трек у смотровой площадки. Беговые экскурсии «Горький–Нескучный–Воробьёвы горы» (18 км). Туалеты, кофе, гардероб.",
+    tags: [
+      {t:"подъёмы / интервалы",g:true},{t:"смотровая площадка",g:true},
+      {t:"резиновый трек",g:true},{t:"беговые туры",g:true},{t:"крутые спуски",w:true}
+    ],
+    score: 8.0
+  },
+  // ==================== ЗАО ====================
+  {
+    rank: 5,
+    name: "Крылатское — кольцевая велотрасса",
+    sub: "Крылатское, ЗАО",
+    district: "ЗАО",
+    distKm: 13.6,
+    distLbl: "13,6 км (кольцо)",
+    surface: "Асфальт (олимпийская трасса)",
+    relief: "Очень холмистый (до 240 м набора)",
+    light: "Частично",
+    notes: "Олимпийская кольцевая велотрасса 1980 г. длиной 13,6 км; 6 крутых холмов, уклоны 5–15°. Малое кольцо ~4,8 км. Популярнейшее место темпового и горного бега. Дополнительно — маршрут по холмам Крылатского 8–9 км по грунтовым тропам (природный ландшафтный заказник).",
+    tags: [
+      {t:"горный бег",g:true},{t:"13,6 км кольцо",g:true},{t:"олимпийская трасса",g:true},
+      {t:"велосипедисты",w:true}
+    ],
+    score: 8.5
+  },
+  {
     rank: 6,
-    name: "Битцевский лес",
-    sub: "Балаклавский просп.",
-    district: "ЮЗАО",
-    distKm: 17,
-    coverKm: "20+ км",
-    coverVal: 20,
-    surface: 6,   surfaceLbl: "Грунт/тропы",
-    relief: 9,    reliefLbl: "Разнообразный",
-    crowd: 7,     crowdLbl: "Тихо",
-    light: 3,     lightLbl: "Нет",
-    nature: 10,   natureLbl: "Настоящий лес",
-    tags: [{t:"OCR-рельеф",g:true},{t:"трейловые тропы",g:true},{t:"нет освещения",g:false},{t:"20+ км путей",g:true}],
+    name: "Крылатское — гребной канал",
+    sub: "Татаровская пойма, ЗАО",
+    district: "ЗАО",
+    distKm: 6.5,
+    distLbl: "~6,5 км (петля)",
+    surface: "Асфальт",
+    relief: "Плоский",
+    light: "Есть",
+    notes: "Петля вокруг олимпийского гребного канала (~2,1 км одна сторона = ~6,5 км круг). Широкие дорожки без машин. Хороший вид на канал и природу Татаровской поймы. В сочетании с велотрассой возможны маршруты 10–20 км.",
+    tags: [
+      {t:"канал — широкие дорожки",g:true},{t:"без машин",g:true},
+      {t:"плоский темповый",g:true},{t:"рядом велотрасса",g:true}
+    ],
     score: 7.8
   },
   {
     rank: 7,
-    name: "Долина реки Сетунь",
-    sub: "Раменки / Матвеевское",
-    district: "ЗАО",
-    distKm: 8,
-    coverKm: "4 км",
-    coverVal: 4,
-    surface: 6,   surfaceLbl: "Грунт",
-    relief: 7,    reliefLbl: "Спуски к реке",
-    crowd: 9,     crowdLbl: "Пусто",
-    light: 3,     lightLbl: "Нет",
-    nature: 9,    natureLbl: "Река, ивы",
-    tags: [{t:"природный заказник",g:true},{t:"без асфальта",g:true},{t:"нет освещения",g:false}],
-    score: 6.6
+    name: "Серебряный Бор",
+    sub: "Хорошёво-Мнёвники, СЗАО",
+    district: "СЗАО",
+    distKm: 10,
+    distLbl: "~10 км (кругосветка острова)",
+    surface: "Асфальт (~80%) + грунт/песок (~20%)",
+    relief: "Плоский",
+    light: "Ограниченно",
+    notes: "«Кругосветка» вокруг острова Серебряный Бор ~10 км, преимущественно асфальт, среди сосновых деревьев. Чистый воздух, берег Москвы-реки. Перепад высот ~48 м. Пляж летом. Маршрут по сосновому лесопарку.",
+    tags: [
+      {t:"сосновый лес",g:true},{t:"чистый воздух",g:true},{t:"пляж летом",g:true},
+      {t:"10 км кольцо",g:true},{t:"пробки на въезде",w:true}
+    ],
+    score: 7.8
   },
   {
     rank: 8,
-    name: "Парк Горького",
-    sub: "Крымский Вал",
-    district: "ЦАО",
-    distKm: 3,
-    coverKm: "5 км",
-    coverVal: 5,
-    surface: 10,  surfaceLbl: "Отличный асфальт",
-    relief: 2,    reliefLbl: "Плоский",
-    crowd: 2,     crowdLbl: "Очень людно",
-    light: 10,    lightLbl: "Отличное",
-    nature: 6,    natureLbl: "Набережная",
-    tags: [{t:"центр",g:true},{t:"резиновое покрытие",g:true},{t:"беговые клубы",g:true},{t:"очень людно",g:false},{t:"закрыт пн",g:false}],
-    score: 6.8
+    name: "Покровское-Стрешнево",
+    sub: "Войковский р-н, СЗАО",
+    district: "СЗАО",
+    distKm: 5.5,
+    distLbl: "5–5,5 км (периметр)",
+    surface: "Асфальт + гранитный отсев",
+    relief: "Плоский / пологий",
+    light: "Есть",
+    notes: "Круговой маршрут по периметру ~5,5 км вдоль каскада прудов на р. Чернушке, среди вековых сосен. Маркированная трасса «5 вёрст» каждую субботу. Беговые дорожки с гранитным отсевом. Туалет. Подходит новичкам.",
+    tags: [
+      {t:"«5 вёрст»",c:true},{t:"маркированный маршрут",g:true},
+      {t:"сосны и пруды",g:true},{t:"подходит новичкам",g:true}
+    ],
+    score: 7.5
   },
   {
     rank: 9,
-    name: "Лужники (набережная)",
-    sub: "Хамовники",
-    district: "ЦАО",
-    distKm: 4,
-    coverKm: "6 км",
-    coverVal: 6,
-    surface: 9,   surfaceLbl: "Резиновый асфальт",
-    relief: 2,    reliefLbl: "Плоский",
-    crowd: 4,     crowdLbl: "Людно",
-    light: 10,    lightLbl: "Круглосуточно",
-    nature: 5,    natureLbl: "Река, газоны",
-    tags: [{t:"5 км круг",g:true},{t:"беговое покрытие",g:true},{t:"стадион рядом",g:true},{t:"толпы туристов",g:false}],
-    score: 7.0
-  },
-  {
-    rank: 10,
-    name: "Нескучный сад",
-    sub: "Ленинский просп.",
-    district: "ЦАО",
-    distKm: 4,
-    coverKm: "3 км",
-    coverVal: 3,
-    surface: 7,   surfaceLbl: "Грунт + асфальт",
-    relief: 8,    reliefLbl: "Холмы",
-    crowd: 7,     crowdLbl: "Умеренно",
-    light: 6,     lightLbl: "Частично",
-    nature: 8,    natureLbl: "Старый лес",
-    tags: [{t:"холмистый рельеф",g:true},{t:"исторический парк",g:true},{t:"рядом с Горьким",g:true}],
-    score: 7.0
-  },
-  {
-    rank: 11,
-    name: "Сокольники",
-    sub: "Красносельский р-н",
-    district: "ВАО",
-    distKm: 7,
-    coverKm: "15 км",
-    coverVal: 15,
-    surface: 8,   surfaceLbl: "Асфальт + грунт",
-    relief: 4,    reliefLbl: "Ровный",
-    crowd: 5,     crowdLbl: "Умеренно",
-    light: 8,     lightLbl: "Хорошее",
-    nature: 8,    natureLbl: "Сосновый лес",
-    tags: [{t:"радиальные аллеи",g:true},{t:"беговые группы",g:true},{t:"аренда инвентаря",g:true}],
-    score: 7.7
-  },
-  {
-    rank: 12,
-    name: "Измайловский парк",
-    sub: "Измайлово",
-    district: "ВАО",
-    distKm: 11,
-    coverKm: "25 км",
-    coverVal: 25,
-    surface: 6,   surfaceLbl: "Грунт / лесные тропы",
-    relief: 5,    reliefLbl: "Умеренный",
-    crowd: 6,     crowdLbl: "Тихо в глубине",
-    light: 4,     lightLbl: "Только по краям",
-    nature: 9,    natureLbl: "Большой лес",
-    tags: [{t:"25 км троп",g:true},{t:"трейл-рельеф",g:true},{t:"лыжные трассы зимой",g:true},{t:"можно заблудиться",g:false}],
+    name: "Парк Фили",
+    sub: "Фили-Давыдково, ЗАО",
+    district: "ЗАО",
+    distKm: 12,
+    distLbl: "7 км (парк) + 5 км (набережная)",
+    surface: "Гранитный отсев + бетонная набережная + асфальт",
+    relief: "Пологий, лёгкие спуски к реке",
+    light: "Есть",
+    notes: "Основная парковая дорожка асфальт и плитка, радиальные — грунт с гранитным отсевом, набережная — бетон. В парке есть открытый бассейн, раздевалки. Маршрут можно продлить вдоль Москвы-реки до Лужников.",
+    tags: [
+      {t:"набережная Москвы-реки",g:true},{t:"раздевалки",g:true},
+      {t:"бассейн",g:true},{t:"открытый бассейн летом",g:true}
+    ],
     score: 7.6
   },
   {
-    rank: 13,
-    name: "Лосиный Остров",
-    sub: "Национальный парк",
-    district: "ВАО",
-    distKm: 13,
-    coverKm: "50+ км",
-    coverVal: 50,
-    surface: 5,   surfaceLbl: "Грунт / трейл",
-    relief: 6,    reliefLbl: "Разнообразный",
-    crowd: 9,     crowdLbl: "Пусто",
-    light: 1,     lightLbl: "Нет",
-    nature: 10,   natureLbl: "Дикий лес",
-    tags: [{t:"50+ км маршрутов",g:true},{t:"лоси",g:true},{t:"нет освещения",g:false},{t:"нужна навигация",g:false}],
-    score: 7.4
+    rank: 10,
+    name: "Долина реки Сетунь",
+    sub: "Раменки / Матвеевское, ЗАО",
+    district: "ЗАО",
+    distKm: 7,
+    distLbl: "~7 км (в одну сторону)",
+    surface: "Грунт / грунтовые тропы",
+    relief: "Спуски к реке, умеренный",
+    light: "Нет",
+    notes: "Природный заказник. Асфальт от главного входа до Сетуньского моста ~7 км; грунтовые тропы вдоль реки. Тихое место, мало людей. Без освещения — только дневные пробежки. Маршрут по набережной реки Сетунь.",
+    tags: [
+      {t:"природный заказник",g:true},{t:"тихо",g:true},{t:"без машин",g:true},
+      {t:"нет освещения",w:true},{t:"грунт",w:true}
+    ],
+    score: 6.8
+  },
+  // ==================== ЮЗАО ====================
+  {
+    rank: 11,
+    name: "Битцевский лес",
+    sub: "Ясенево / Тёплый Стан, ЮЗАО",
+    district: "ЮЗАО",
+    distKm: 40,
+    distLbl: "10–40+ км",
+    surface: "Грунт, лесные тропы, гравий, асфальт",
+    relief: "Разнообразный: долины, овраги, холмы",
+    light: "Нет (только у входов)",
+    notes: "Один из крупнейших лесных массивов в черте МКАД, 2200+ га. Лыжные трассы 40+ км (летом — для бега). Трасса забега «Битцевская прямая». Паркран Битца (ныне «5 вёрст» Битца) — 5 км по суходольному лугу и лесу. Усадьбы Ясенево и Узкое внутри. Подходит для трейла и длинных тренировок.",
+    tags: [
+      {t:"«5 вёрст» Битца",c:true},{t:"40+ км троп",g:true},{t:"трейл-рельеф",g:true},
+      {t:"лыжные трассы зимой",g:true},{t:"нет освещения",w:true},{t:"легко заблудиться",w:true}
+    ],
+    score: 8.3
   },
   {
+    rank: 12,
+    name: "Воронцовский парк",
+    sub: "Коньково / Тёплый Стан, ЮЗАО",
+    district: "ЮЗАО",
+    distKm: 5,
+    distLbl: "5–7 км",
+    surface: "Гранитный отсев + плитка",
+    relief: "Холмистый",
+    light: "Хорошее",
+    notes: "Усадьба XVI–XIX вв. Живописные пруды и каскадный ручей. Круговой маршрут по периметру ~3 км; можно совместить с соседним Тропарёво-Никулино для 7 км. Гравийные тропинки с перепадами высот. Туалеты, освещение.",
+    tags: [
+      {t:"усадьба и пруды",g:true},{t:"гравийные тропы",g:true},
+      {t:"хорошее освещение",g:true},{t:"рядом Тропарёво",g:true}
+    ],
+    score: 7.3
+  },
+  {
+    rank: 13,
+    name: "Тропарёво / Олимпийская деревня",
+    sub: "Тропарёво-Никулино, ЮЗАО",
+    district: "ЮЗАО",
+    distKm: 6,
+    distLbl: "6 км (петля)",
+    surface: "Асфальт + гравий + резиновый трек",
+    relief: "Умеренный, ступени к озеру",
+    light: "Хорошее",
+    notes: "Петля вокруг Олимпийского пруда ~2,3 км; расширенный маршрут 6 км по Тропарёво и Олимпийской деревне. Туалеты, кафе, раздевалки. Живописный мост с подъёмом. Асфальт + гравийный отсев.",
+    tags: [
+      {t:"раздевалки",g:true},{t:"кафе",g:true},{t:"петляющий маршрут",g:true},
+      {t:"пруд",g:true}
+    ],
+    score: 7.4
+  },
+  // ==================== СВАО ====================
+  {
     rank: 14,
-    name: "Тимирязевский парк",
-    sub: "Тимирязевский р-н",
-    district: "САО",
-    distKm: 8,
-    coverKm: "10 км",
-    coverVal: 10,
-    surface: 7,   surfaceLbl: "Грунт + асфальт",
-    relief: 5,    reliefLbl: "Пологий",
-    crowd: 7,     crowdLbl: "Умеренно",
-    light: 6,     lightLbl: "Частично",
-    nature: 8,    natureLbl: "Пруды, лес",
-    tags: [{t:"беговые маршруты",g:true},{t:"научный лес",g:true},{t:"пруды",g:true}],
-    score: 7.0
+    name: "Останкино + Ботанический сад",
+    sub: "Останкинский р-н, СВАО",
+    district: "СВАО",
+    distKm: 10,
+    distLbl: "10–12 км (Останкино + ГБС)",
+    surface: "Асфальт + плитка",
+    relief: "Плоский",
+    light: "Есть",
+    notes: "Остановка бега через Останкинский парк → Главный ботанический сад РАН → ВДНХ — суммарно 10–12 км. ГБС — крупнейший ботанический сад Европы. Беговой клуб Ostankino Runners (с 2014 г.); субботние пробежки 5–6 км по ботаническому саду. Стадион с 400-метровой дорожкой в Останкинском парке.",
+    tags: [
+      {t:"Ostankino Runners",c:true},{t:"маршрут Останкино–ГБС–ВДНХ",g:true},
+      {t:"стадион 400 м",g:true},{t:"ботанические пейзажи",g:true}
+    ],
+    score: 7.9
   },
   {
     rank: 15,
-    name: "Серебряный Бор",
-    sub: "Хорошёво-Мнёвники",
-    district: "САО",
-    distKm: 10,
-    coverKm: "8 км",
-    coverVal: 8,
-    surface: 6,   surfaceLbl: "Грунт / песок",
-    relief: 4,    reliefLbl: "Ровный",
-    crowd: 5,     crowdLbl: "Многолюдно летом",
-    light: 4,     lightLbl: "Мало",
-    nature: 9,    natureLbl: "Сосновый лес, пляж",
-    tags: [{t:"сосновый лес",g:true},{t:"пляж летом",g:true},{t:"чистый воздух",g:true},{t:"пробки на въезде",g:false}],
-    score: 7.2
+    name: "Лосиный Остров",
+    sub: "Национальный парк, ВАО–СВАО",
+    district: "СВАО",
+    distKm: 25,
+    distLbl: "5–25+ км",
+    surface: "Грунт, лесные тропы (природные)",
+    relief: "Плоский, отдельные заболоченные участки",
+    light: "Нет",
+    notes: "Национальный парк, 11 тыс. га. Большая Лосиноостровская лыжня — 25-километровый закольцованный маршрут по московской части парка. Трасса от МЦК «Белокаменная». Маршрут «По берегам реки Яуза» (2 км). Дикая природа: лоси, белки. Нужна навигация (Strava/maps). Нет туалетов.",
+    tags: [
+      {t:"25 км кольцо",g:true},{t:"нацпарк",g:true},{t:"дикая природа",g:true},
+      {t:"нет освещения",w:true},{t:"нужна навигация",w:true},{t:"нет туалетов",w:true}
+    ],
+    score: 7.5
   },
   {
     rank: 16,
-    name: "Парк Лазутиной (Одинцово)",
-    sub: "Одинцово, Подушкинский лес",
-    district: "МО",
-    distKm: 25,
-    coverKm: "18 км",
-    coverVal: 18,
-    surface: 9,   surfaceLbl: "Асфальт + грунт",
-    relief: 8,    reliefLbl: "Холмистый",
-    crowd: 8,     crowdLbl: "Мало людей",
-    light: 6,     lightLbl: "Трасса освещена",
-    nature: 9,    natureLbl: "Подушкинский лес",
-    tags: [{t:"лыжероллерная трасса",g:true},{t:"маркированные круги",g:true},{t:"ECO-маршруты",g:true},{t:"далеко от центра",g:false}],
+    name: "Сокольники",
+    sub: "Красносельский р-н, ВАО",
+    district: "ВАО",
+    distKm: 5,
+    distLbl: "5 км (маркированный) / 10+ км (расширенный)",
+    surface: "Асфальт + грунт (после дождя — лужи)",
+    relief: "Плоский",
+    light: "Хорошее",
+    notes: "Маркированный маршрут «5 вёрст» 5 км каждую субботу. Радиальная планировка парка: прямые аллеи-«лучи» из центра, удобно складывать свои маршруты 10+ км. Nike Running Club тренируется здесь. Туалеты, кафе. Реконструкция отдельных зон 2024–2025 гг.",
+    tags: [
+      {t:"«5 вёрст» Сокольники",c:true},{t:"Nike Running Club",c:true},
+      {t:"радиальные аллеи",g:true},{t:"сосновый лес",g:true},{t:"хорошее освещение",g:true}
+    ],
     score: 8.0
   },
   {
     rank: 17,
-    name: "Троицкий лес (Одинцово)",
-    sub: "Одинцово, р-н Трёхгорки",
-    district: "МО",
-    distKm: 22,
-    coverKm: "6 км",
-    coverVal: 6,
-    surface: 5,   surfaceLbl: "Грунт",
-    relief: 6,    reliefLbl: "Умеренный",
-    crowd: 9,     crowdLbl: "Пусто",
-    light: 2,     lightLbl: "Нет",
-    nature: 8,    natureLbl: "Лес",
-    tags: [{t:"почти безлюдный",g:true},{t:"нет инфраструктуры",g:false}],
-    score: 6.0
+    name: "Измайловский лесопарк",
+    sub: "Измайлово, ВАО",
+    district: "ВАО",
+    distKm: 10,
+    distLbl: "8–18 км",
+    surface: "Асфальт (60%) + грунт/тропы (40%)",
+    relief: "Умеренный, длинные прямые с плавными подъёмами",
+    light: "По главным аллеям",
+    notes: "Один из крупнейших лесопарков Москвы, 300+ га. Летний маршрут 10–10,5 км (40% грунт, 60% асфальт); гравийный маршрут 8 км с набором 90 м. Зимой 100% асфальт. «5 вёрст» Измайлово по субботам. Лыжный клуб «Измайлово» с размеченными трассами. Измайловский полумарафон ежегодно.",
+    tags: [
+      {t:"«5 вёрст» Измайлово",c:true},{t:"лыжный клуб",c:true},
+      {t:"10+ км маршрут",g:true},{t:"Измайловский п/марафон",g:true},
+      {t:"большой лес",g:true},{t:"можно заблудиться",w:true}
+    ],
+    score: 8.1
   },
   {
     rank: 18,
-    name: "Крылатское",
-    sub: "Крылатское",
-    district: "ЗАО",
-    distKm: 12,
-    coverKm: "14 км",
-    coverVal: 14,
-    surface: 9,   surfaceLbl: "Асфальт (кольцевая)",
-    relief: 7,    reliefLbl: "Холмы",
-    crowd: 6,     crowdLbl: "Умеренно",
-    light: 6,     lightLbl: "Частично",
-    nature: 7,    natureLbl: "Поля, река",
-    tags: [{t:"кольцевая 14 км",g:true},{t:"велотрек рядом",g:true},{t:"длинный темповый бег",g:true}],
-    score: 7.8
+    name: "Кузьминки–Люблино",
+    sub: "Кузьминки / Люблино, ЮВАО",
+    district: "ЮВАО",
+    distKm: 7,
+    distLbl: "7+ км",
+    surface: "Асфальт + плитка",
+    relief: "Плоский",
+    light: "Хорошее",
+    notes: "Непрерывный маршрут вдоль прудов и р. Чурилихи через Кузьминки в Люблино. «5 вёрст» Кузьминки — еженедельные субботние старты. Исторический конный двор, пруды, пляж. Хорошее освещение, туалеты, кафе.",
+    tags: [
+      {t:"«5 вёрст» Кузьминки",c:true},{t:"пруды и пляж",g:true},
+      {t:"хорошее освещение",g:true},{t:"исторические усадьбы",g:true}
+    ],
+    score: 7.6
   },
   {
     rank: 19,
-    name: "Москва-река (Строгино)",
-    sub: "Строгино",
-    district: "ЗАО",
-    distKm: 14,
-    coverKm: "7 км",
-    coverVal: 7,
-    surface: 8,   surfaceLbl: "Асфальт набережная",
-    relief: 2,    reliefLbl: "Плоский",
-    crowd: 7,     crowdLbl: "Тихо",
-    light: 7,     lightLbl: "Хорошее",
-    nature: 7,    natureLbl: "Река, острова",
-    tags: [{t:"набережная 7 км",g:true},{t:"купание летом",g:true},{t:"ровный темп",g:true}],
-    score: 7.1
+    name: "Коломенское",
+    sub: "Нагатинский р-н, ЮАО",
+    district: "ЮАО",
+    distKm: 5.6,
+    distLbl: "5,6 км (основная петля)",
+    surface: "Плитка (набережная) + асфальт + гравий",
+    relief: "Умеренный: спуски к реке, холм у входа",
+    light: "Частично",
+    notes: "Маршрут по Царской набережной и верхней части усадьбы ~5,6 км. ЮНЕСКО-памятник: церковь Вознесения, деревянный дворец. «5 вёрст» Коломенское — бесплатные субботние старты. Парк закрывается в 22–24:00. Туалеты, кафе.",
+    tags: [
+      {t:"«5 вёрст» Коломенское",c:true},{t:"Царская набережная",g:true},
+      {t:"вид на Москву-реку",g:true},{t:"исторический ансамбль",g:true},
+      {t:"закрыт ночью",w:true}
+    ],
+    score: 7.9
   },
   {
     rank: 20,
-    name: "Истринский лес",
-    sub: "Истра, МО",
-    district: "МО",
-    distKm: 60,
-    coverKm: "30+ км",
-    coverVal: 30,
-    surface: 5,   surfaceLbl: "Грунт / трейл",
-    relief: 8,    reliefLbl: "Холмистый",
-    crowd: 10,    crowdLbl: "Почти никого",
-    light: 1,     lightLbl: "Нет",
-    nature: 10,   natureLbl: "Дикий лес + водохр.",
-    tags: [{t:"дикий трейл",g:true},{t:"водохранилище",g:true},{t:"далеко — 60 км",g:false},{t:"нет инфраструктуры",g:false}],
+    name: "Царицыно",
+    sub: "Орехово-Борисово, ЮАО",
+    district: "ЮАО",
+    distKm: 5,
+    distLbl: "5–8 км",
+    surface: "Гравийный отсев + плитка",
+    relief: "Пологий, лёгкие спуски",
+    light: "Частично",
+    notes: "Маршрут вдоль Нижнего Царицынского пруда и через верхнюю часть парка ~5 км; расширенный по «Долине реки Язвенки» ~8 км. Дворцовый ансамбль Екатерины II. Хороший гравий. Закрыт ночью (до 24:00). Туалеты.",
+    tags: [
+      {t:"дворцовый ансамбль",g:true},{t:"гравийные дорожки",g:true},
+      {t:"пруды",g:true},{t:"закрыт ночью",w:true}
+    ],
+    score: 7.5
+  },
+  // ==================== САО / СЗАО ====================
+  {
+    rank: 21,
+    name: "Тимирязевский парк",
+    sub: "Тимирязевский р-н, САО",
+    district: "САО",
+    distKm: 8,
+    distLbl: "5–8 км",
+    surface: "Грунт (нет асфальта на трассе «5 вёрст»)",
+    relief: "Пологий, в основном плоский",
+    light: "Частично",
+    notes: "Исторический парк-дендрарий (памятник природы). Маршрут «5 вёрст» Тимирязевский — 5 км грунтовой трассой каждую субботу (шипы в мороз). Периметр парка ~8 км. После дождей — грязь. Глубокая лесная тень летом. Нет туалетов на маршруте.",
+    tags: [
+      {t:"«5 вёрст» Тимирязевский",c:true},{t:"грунтовые тропы",g:true},
+      {t:"дендрарий",g:true},{t:"пруды",g:true},{t:"грязь в дождь",w:true}
+    ],
+    score: 7.3
+  },
+  {
+    rank: 22,
+    name: "Северное Тушино",
+    sub: "Северное Тушино, СЗАО",
+    district: "СЗАО",
+    distKm: 7,
+    distLbl: "5–7 км (кольцо)",
+    surface: "Плитка + асфальт + гравий",
+    relief: "Плоский / небольшие холмы",
+    light: "Хорошее (круглосуточно)",
+    notes: "Маршрут по набережной Химкинского водохранилища, через яблоневый сад, мимо Северного речного вокзала и пришвартованных судов. «5 вёрст» Северное Тушино. Отличные виды. Рядом — Алёшкинский лес (дополнительные грунтовые маршруты).",
+    tags: [
+      {t:"«5 вёрст»",c:true},{t:"Химкинское водохр.",g:true},
+      {t:"речной вокзал",g:true},{t:"круглосуточное освещение",g:true}
+    ],
+    score: 7.7
+  },
+  {
+    rank: 23,
+    name: "Парк Яуза (Ростокинский)",
+    sub: "Ростокино / Ростокинский акведук, СВАО",
+    district: "СВАО",
+    distKm: 7.5,
+    distLbl: "7,5 км (в одну сторону)",
+    surface: "Плитка + гравийный отсев + деревянные мостики + резиновый трек",
+    relief: "Плоский; один небольшой холм у акведука",
+    light: "Хорошее",
+    notes: "Парк «Яуза» — самый протяжённый линейный парк Москвы (20 км вдоль р. Яузы). Маршрут вдоль набережной в одну сторону ~7,5 км. Ростокинский акведук (XVIII в.) — уникальный архитектурный объект по пути. Беговые, велосипедные и экологические маршруты. Спортивные площадки, кофе, туалеты.",
+    tags: [
+      {t:"20 км вдоль Яузы",g:true},{t:"Ростокинский акведук",g:true},
+      {t:"разнообразное покрытие",g:true},{t:"хорошее освещение",g:true}
+    ],
+    score: 8.0
+  },
+  // ==================== ВАО ====================
+  {
+    rank: 24,
+    name: "Перово + Кусково",
+    sub: "Перово / Вешняки, ВАО",
+    district: "ВАО",
+    distKm: 16,
+    distLbl: "16 км (Кусково + Перово)",
+    surface: "Асфальт + плитка",
+    relief: "Умеренный",
+    light: "По главным дорожкам",
+    notes: "Непрерывный маршрут: территория усадьбы Кусково (3-я Музейная ул.) → ул. Юности → Перовский парк. Суммарно ~16 км. Усадьба Шереметевых XVIII в. с партерным садом и прудами. Перовский парк с хорошими дорожками.",
+    tags: [
+      {t:"усадьба Кусково",g:true},{t:"16 км маршрут",g:true},
+      {t:"пруды",g:true},{t:"мало бегунов",g:true}
+    ],
+    score: 7.2
+  },
+  // ==================== ЮАО ====================
+  {
+    rank: 25,
+    name: "Бирюлёвский дендропарк",
+    sub: "Бирюлёво Западное, ЮАО",
+    district: "ЮАО",
+    distKm: 5,
+    distLbl: "5–6 км",
+    surface: "Асфальт + гравий",
+    relief: "Пологий",
+    light: "Частично",
+    notes: "Дендрологический парк 160 га. Петля по периметру ~5–6 км. Тихое, малолюдное место в южной части Москвы. Коллекция деревьев и кустарников. Пруды. Хороший вариант для жителей юга города.",
+    tags: [
+      {t:"тихий парк",g:true},{t:"дендроколлекция",g:true},
+      {t:"пруды",g:true},{t:"мало людей",g:true}
+    ],
     score: 6.8
+  },
+  // ==================== Длинные/уникальные ====================
+  {
+    rank: 26,
+    name: "Лужники — полный маршрут (набережные)",
+    sub: "Набережная от Крымского до 3-го кольца",
+    district: "ЦАО",
+    distKm: 9,
+    distLbl: "9 км (набережная)",
+    surface: "Асфальт + резиновое покрытие",
+    relief: "Плоский",
+    light: "Отличное",
+    notes: "Протяжённый маршрут по южным набережным Москвы-реки: Крымский Вал → Парк Горького → Нескучный сад → Воробьёвская набережная → до 3-го транспортного кольца: ~9 км без светофоров. Является часть Горького–Нескучного–Воробьёвых гор (18 км с разворотом). Отличное освещение.",
+    tags: [
+      {t:"9 км без светофоров",g:true},{t:"три парка подряд",g:true},
+      {t:"ночное освещение",g:true},{t:"плоский темповый",g:true}
+    ],
+    score: 8.4
+  },
+  {
+    rank: 27,
+    name: "Химкинский лесопарк",
+    sub: "Левобережный р-н (Химки), СЗАО",
+    district: "СЗАО",
+    distKm: 5,
+    distLbl: "5+ км",
+    surface: "Грунт + асфальт",
+    relief: "Умеренный",
+    light: "Ограниченно",
+    notes: "Лесной массив на границе Москвы и Химок. Экологические тропы 3,3 км; беговой маршрут по кольцу ~5 км. Сосновый лес, чистый воздух. Роллерская трасса 3 км. Летом — яркие забеги серии «Подъём». Удобно из Северного Тушино.",
+    tags: [
+      {t:"сосновый лес",g:true},{t:"чистый воздух",g:true},
+      {t:"роллерская трасса",g:true},{t:"рядом Тушино",g:true}
+    ],
+    score: 7.0
   }
 ];
 
 const badgeClass = {
-  "ЗАО": "badge-w", "ЮЗАО": "badge-sw", "ЦАО": "badge-c",
-  "САО": "badge-n", "ВАО": "badge-e", "МО": "badge-mo"
+  "ЦАО":  "badge-cao",
+  "ЗАО":  "badge-zao",
+  "ЮЗАО": "badge-szao",
+  "УЗАО": "badge-szao",
+  "САО":  "badge-sao",
+  "СЗАО": "badge-sao",
+  "ВАО":  "badge-vao",
+  "СВАО": "badge-svao",
+  "ЮВАО": "badge-uvao",
+  "ЮАО":  "badge-yao"
 };
 
-function renderBar(val, max=10, color='var(--accent)') {
-  const pct = (val / max) * 100;
-  const barColor = val <= 3 ? 'var(--accent2)' : val <= 5 ? '#ffb432' : color;
-  return `<div class="score-bar"><div class="score-fill" style="width:${pct}%;background:${barColor}"></div></div>`;
-}
-
 function renderRow(p, idx) {
-  const tags = p.tags.map(t =>
-    `<span class="tag ${t.g ? 'tag-good' : 'tag-warn'}">${t.t}</span>`
-  ).join('');
+  const tags = p.tags.map(t => {
+    const cls = t.c ? 'tag-club' : t.g ? 'tag-good' : 'tag-warn';
+    return `<span class="tag ${cls}">${t.t}</span>`;
+  }).join('');
 
-  return `<tr data-district="${p.district}" data-score="${p.score}" data-dist="${p.distKm}" data-cover="${p.coverVal}" data-rank="${p.rank}">
+  return `<tr data-district="${p.district}" data-score="${p.score}" data-dist="${p.distKm}" data-rank="${p.rank}">
     <td class="col-rank">${p.rank}</td>
     <td class="col-name">${p.name}<small>${p.sub}</small></td>
-    <td><span class="badge ${badgeClass[p.district]}">${p.district}</span></td>
-    <td class="col-dist"><span class="dist-val">${p.distKm}</span> км</td>
-    <td class="score-cell"><div class="score-num">${p.coverKm}</div>${renderBar(Math.min(p.coverVal, 30), 30)}</td>
-    <td class="score-cell"><div class="score-num">${p.surfaceLbl}</div>${renderBar(p.surface)}</td>
-    <td class="score-cell"><div class="score-num">${p.reliefLbl}</div>${renderBar(p.relief)}</td>
-    <td class="score-cell"><div class="score-num">${p.crowdLbl}</div>${renderBar(p.crowd)}</td>
-    <td class="score-cell"><div class="score-num">${p.lightLbl}</div>${renderBar(p.light)}</td>
-    <td class="score-cell"><div class="score-num">${p.natureLbl}</div>${renderBar(p.nature)}</td>
+    <td><span class="badge ${badgeClass[p.district] || 'badge-cao'}">${p.district}</span></td>
+    <td class="km-cell">${p.distLbl}</td>
+    <td class="score-cell"><div class="score-num">${p.surface}</div></td>
+    <td class="score-cell"><div class="score-num">${p.relief}</div></td>
+    <td class="score-cell"><div class="score-num">${p.light}</div></td>
+    <td class="notes-cell">${p.notes}</td>
     <td><div class="tags">${tags}</div></td>
     <td><div class="total-score">${p.score.toFixed(1)}</div></td>
   </tr>`;
@@ -736,8 +891,7 @@ function applyFiltersAndSort() {
     data = data.filter(p => p.district === currentFilter);
   }
   if (currentSort === 'score') data.sort((a,b) => b.score - a.score);
-  else if (currentSort === 'dist') data.sort((a,b) => a.distKm - b.distKm);
-  else if (currentSort === 'cover') data.sort((a,b) => b.coverVal - a.coverVal);
+  else if (currentSort === 'dist') data.sort((a,b) => b.distKm - a.distKm);
   else data.sort((a,b) => a.rank - b.rank);
   render(data);
 }
