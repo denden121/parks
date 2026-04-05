@@ -16,7 +16,8 @@
       "WebFetch(domain:www.championat.com)",
       "WebFetch(domain:parkseason.ru)",
       "WebFetch(domain:www.putevka.com)",
-      "WebFetch(domain:greatruns.com)"
+      "WebFetch(domain:greatruns.com)",
+      "WebFetch(domain:begaem.com)"
     ]
   }
 }
