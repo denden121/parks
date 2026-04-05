@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Парки Москвы для бега</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #131313;
+    --border: #222;
+    --accent: #c8f135;
+    --accent2: #ff6b35;
+    --text: #e8e8e8;
+    --muted: #666;
+    --tag-bg: #1a1a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: 'RUN';
+    position: absolute;
+    right: -20px;
+    top: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px;
+    color: rgba(200,241,53,0.04);
+    letter-spacing: -4px;
+    pointer-events: none;
+  }
+  .header-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 7vw, 80px);
+    letter-spacing: 2px;
+    line-height: 0.95;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  h1 span { color: var(--accent); }
+  .header-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* FILTERS */
+  .controls {
+    padding: 20px 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .filter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .filter-btn {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,241,53,0.06);
+  }
+  .sort-select {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-left: auto;
+    outline: none;
+  }
+
+  /* TABLE WRAPPER */
+  .table-wrap {
+    overflow-x: auto;
+    padding: 0 0 48px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 1100px;
+  }
+
+  thead tr {
+    border-bottom: 2px solid var(--accent);
+  }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 16px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.15s;
+  }
+  thead th:hover { color: var(--accent); }
+  thead th.sorted { color: var(--accent); }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+  }
+  tbody tr:hover { background: rgba(200,241,53,0.03); }
+  tbody tr.hidden { display: none; }
+
+  td {
+    padding: 14px 16px;
+    vertical-align: middle;
+  }
+
+  /* Rank column */
+  .col-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--border);
+    width: 44px;
+    text-align: center;
+  }
+  tr:hover .col-rank { color: var(--accent); }
+
+  /* Name */
+  .col-name {
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    min-width: 180px;
+    line-height: 1.3;
+  }
+  .col-name small {
+    display: block;
+    font-weight: 300;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* District badge */
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .badge-w  { background: rgba(100,180,255,0.12); color: #64b4ff; border: 1px solid rgba(100,180,255,0.2); }
+  .badge-sw { background: rgba(180,120,255,0.12); color: #b478ff; border: 1px solid rgba(180,120,255,0.2); }
+  .badge-c  { background: rgba(255,180,50,0.12);  color: #ffb432; border: 1px solid rgba(255,180,50,0.2); }
+  .badge-n  { background: rgba(50,220,130,0.12);  color: #32dc82; border: 1px solid rgba(50,220,130,0.2); }
+  .badge-e  { background: rgba(255,100,80,0.12);  color: #ff6450; border: 1px solid rgba(255,100,80,0.2); }
+  .badge-mo { background: rgba(200,241,53,0.10);  color: var(--accent); border: 1px solid rgba(200,241,53,0.2); }
+
+  /* Distance km */
+  .col-dist {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .dist-val { color: #fff; font-weight: 500; }
+
+  /* Score bars */
+  .score-cell { min-width: 90px; }
+  .score-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    margin-top: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transition: width 0.4s ease;
+  }
+  .score-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  /* Stars */
+  .stars {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .stars-empty { color: var(--border); }
+
+  /* Tags */
+  .tags { display: flex; gap: 5px; flex-wrap: wrap; min-width: 130px; }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+  }
+  .tag-good { border-color: rgba(200,241,53,0.3); color: var(--accent); background: rgba(200,241,53,0.05); }
+  .tag-warn { border-color: rgba(255,107,53,0.3); color: var(--accent2); background: rgba(255,107,53,0.05); }
+
+  /* Total score highlight */
+  .total-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  /* Legend */
+  .legend {
+    padding: 20px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* Sticky header */
+  thead th { position: sticky; top: 0; background: var(--bg); z-index: 10; }
+
+  /* Count */
+  .count-info {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 10px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .count-info span { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .header, .controls, .legend, .count-info { padding-left: 16px; padding-right: 16px; }
+    h1 { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">📍 Москва / Подмосковье — апрель 2026</div>
+  <h1>ПАРКИ<br><span>ДЛЯ БЕГА</span></h1>
+  <div class="header-meta">20 локаций · сравнительный анализ · рейтинг бегуна</div>
+</div>
+
+<div class="controls">
+  <span class="filter-label">Округ:</span>
+  <button class="filter-btn active" data-filter="all">Все</button>
+  <button class="filter-btn" data-filter="ЗАО">ЗАО</button>
+  <button class="filter-btn" data-filter="ЮЗАО">ЮЗАО</button>
+  <button class="filter-btn" data-filter="ЦАО">ЦАО</button>
+  <button class="filter-btn" data-filter="САО">САО</button>
+  <button class="filter-btn" data-filter="ВАО">ВАО</button>
+  <button class="filter-btn" data-filter="МО">Подмосковье</button>
+  <select class="sort-select" id="sortSelect">
+    <option value="rank">По рангу</option>
+    <option value="score">По рейтингу бегуна</option>
+    <option value="dist">По удалённости</option>
+    <option value="cover">По км дорожек</option>
+  </select>
+</div>
+
+<div class="count-info">Показано: <span id="countShown">20</span> из 20 парков</div>
+
+<div class="table-wrap">
+<table id="mainTable">
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Название</th>
+    <th>Округ</th>
+    <th data-sort="dist">От центра ↕</th>
+    <th data-sort="cover">Дорожки ↕</th>
+    <th data-sort="surface">Покрытие ↕</th>
+    <th data-sort="relief">Рельеф ↕</th>
+    <th data-sort="crowd">Людно ↕</th>
+    <th data-sort="light">Освещ. ↕</th>
+    <th data-sort="nature">Природа ↕</th>
+    <th>Особенности</th>
+    <th data-sort="score">★ Рейтинг</th>
+  </tr>
+</thead>
+<tbody id="tableBody">
+</tbody>
+</table>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="badge badge-w">ЗАО</span> Западный</div>
+  <div class="legend-item"><span class="badge badge-sw">ЮЗАО</span> Юго-Западный</div>
+  <div class="legend-item"><span class="badge badge-c">ЦАО</span> Центральный</div>
+  <div class="legend-item"><span class="badge badge-n">САО</span> Северный</div>
+  <div class="legend-item"><span class="badge badge-e">ВАО</span> Восточный</div>
+  <div class="legend-item"><span class="badge badge-mo">МО</span> Подмосковье</div>
+  <div class="legend-item"><span class="tag tag-good">тег</span> плюс для бегуна</div>
+  <div class="legend-item"><span class="tag tag-warn">тег</span> предупреждение</div>
+  <div class="legend-item">Рейтинг: 1–10 · среднее по 5 критериям</div>
+</div>
+
+<script>
+const parks = [
+  {
+    rank: 1,
+    name: "Парк Олимпийской деревни",
+    sub: "Тропарёво-Никулино",
+    district: "ЗАО",
+    distKm: 13,
+    coverKm: "8 км",
+    coverVal: 8,
+    surface: 9,   surfaceLbl: "Асфальт + грунт",
+    relief: 8,    reliefLbl: "Холмистый",
+    crowd: 8,     crowdLbl: "Тихо",
+    light: 7,     lightLbl: "Частично",
+    nature: 9,    natureLbl: "Озеро, лес",
+    tags: [{t:"петляющий трейл",g:true},{t:"озеро в центре",g:true},{t:"мало людей",g:true}],
+    score: 8.2
+  },
+  {
+    rank: 2,
+    name: "Парк Фили",
+    sub: "Фили-Давыдково",
+    district: "ЗАО",
+    distKm: 9,
+    coverKm: "12 км",
+    coverVal: 12,
+    surface: 8,   surfaceLbl: "Асфальт + набережная",
+    relief: 6,    reliefLbl: "Ровный/спуски",
+    crowd: 5,     crowdLbl: "Многолюдно",
+    light: 8,     lightLbl: "Хорошее",
+    nature: 8,    natureLbl: "Река, деревья",
+    tags: [{t:"набережная Москвы-реки",g:true},{t:"велодорожка",g:true},{t:"пляж летом",g:true},{t:"выходные — людно",g:false}],
+    score: 7.9
+  },
+  {
+    rank: 3,
+    name: "Филёвский парк",
+    sub: "Фили",
+    district: "ЗАО",
+    distKm: 7,
+    coverKm: "6 км",
+    coverVal: 6,
+    surface: 7,   surfaceLbl: "Асфальт",
+    relief: 5,    reliefLbl: "Пологий",
+    crowd: 6,     crowdLbl: "Умеренно",
+    light: 7,     lightLbl: "Есть",
+    nature: 7,    natureLbl: "Пруд, аллеи",
+    tags: [{t:"метро Фили",g:true},{t:"вид на реку",g:true},{t:"узкие дорожки",g:false}],
+    score: 6.9
+  },
+  {
+    rank: 4,
+    name: "Парк 50-летия Октября",
+    sub: "Проспект Вернадского",
+    district: "ЗАО",
+    distKm: 10,
+    coverKm: "5 км",
+    coverVal: 5,
+    surface: 8,   surfaceLbl: "Асфальт",
+    relief: 6,    reliefLbl: "Пологий",
+    crowd: 7,     crowdLbl: "Тихо",
+    light: 7,     lightLbl: "Частично",
+    nature: 7,    natureLbl: "Пруд, зелень",
+    tags: [{t:"беговые дорожки",g:true},{t:"workout-зона",g:true},{t:"бесплатный",g:true}],
+    score: 7.0
+  },
+  {
+    rank: 5,
+    name: "Воронцовский парк",
+    sub: "Северное Бутово",
+    district: "ЮЗАО",
+    distKm: 14,
+    coverKm: "7 км",
+    coverVal: 7,
+    surface: 8,   surfaceLbl: "Асфальт + грунт",
+    relief: 7,    reliefLbl: "Холмистый",
+    crowd: 7,     crowdLbl: "Умеренно",
+    light: 7,     lightLbl: "Хорошее",
+    nature: 8,    natureLbl: "Пруды, усадьба",
+    tags: [{t:"усадьба XVI в.",g:true},{t:"пруды",g:true},{t:"тропинки в лесу",g:true}],
+    score: 7.5
+  },
+  {
+    rank: 6,
+    name: "Битцевский лес",
+    sub: "Балаклавский просп.",
+    district: "ЮЗАО",
+    distKm: 17,
+    coverKm: "20+ км",
+    coverVal: 20,
+    surface: 6,   surfaceLbl: "Грунт/тропы",
+    relief: 9,    reliefLbl: "Разнообразный",
+    crowd: 7,     crowdLbl: "Тихо",
+    light: 3,     lightLbl: "Нет",
+    nature: 10,   natureLbl: "Настоящий лес",
+    tags: [{t:"OCR-рельеф",g:true},{t:"трейловые тропы",g:true},{t:"нет освещения",g:false},{t:"20+ км путей",g:true}],
+    score: 7.8
+  },
+  {
+    rank: 7,
+    name: "Долина реки Сетунь",
+    sub: "Раменки / Матвеевское",
+    district: "ЗАО",
+    distKm: 8,
+    coverKm: "4 км",
+    coverVal: 4,
+    surface: 6,   surfaceLbl: "Грунт",
+    relief: 7,    reliefLbl: "Спуски к реке",
+    crowd: 9,     crowdLbl: "Пусто",
+    light: 3,     lightLbl: "Нет",
+    nature: 9,    natureLbl: "Река, ивы",
+    tags: [{t:"природный заказник",g:true},{t:"без асфальта",g:true},{t:"нет освещения",g:false}],
+    score: 6.6
+  },
+  {
+    rank: 8,
+    name: "Парк Горького",
+    sub: "Крымский Вал",
+    district: "ЦАО",
+    distKm: 3,
+    coverKm: "5 км",
+    coverVal: 5,
+    surface: 10,  surfaceLbl: "Отличный асфальт",
+    relief: 2,    reliefLbl: "Плоский",
+    crowd: 2,     crowdLbl: "Очень людно",
+    light: 10,    lightLbl: "Отличное",
+    nature: 6,    natureLbl: "Набережная",
+    tags: [{t:"центр",g:true},{t:"резиновое покрытие",g:true},{t:"беговые клубы",g:true},{t:"очень людно",g:false},{t:"закрыт пн",g:false}],
+    score: 6.8
+  },
+  {
+    rank: 9,
+    name: "Лужники (набережная)",
+    sub: "Хамовники",
+    district: "ЦАО",
+    distKm: 4,
+    coverKm: "6 км",
+    coverVal: 6,
+    surface: 9,   surfaceLbl: "Резиновый асфальт",
+    relief: 2,    reliefLbl: "Плоский",
+    crowd: 4,     crowdLbl: "Людно",
+    light: 10,    lightLbl: "Круглосуточно",
+    nature: 5,    natureLbl: "Река, газоны",
+    tags: [{t:"5 км круг",g:true},{t:"беговое покрытие",g:true},{t:"стадион рядом",g:true},{t:"толпы туристов",g:false}],
+    score: 7.0
+  },
+  {
+    rank: 10,
+    name: "Нескучный сад",
+    sub: "Ленинский просп.",
+    district: "ЦАО",
+    distKm: 4,
+    coverKm: "3 км",
+    coverVal: 3,
+    surface: 7,   surfaceLbl: "Грунт + асфальт",
+    relief: 8,    reliefLbl: "Холмы",
+    crowd: 7,     crowdLbl: "Умеренно",
+    light: 6,     lightLbl: "Частично",
+    nature: 8,    natureLbl: "Старый лес",
+    tags: [{t:"холмистый рельеф",g:true},{t:"исторический парк",g:true},{t:"рядом с Горьким",g:true}],
+    score: 7.0
+  },
+  {
+    rank: 11,
+    name: "Сокольники",
+    sub: "Красносельский р-н",
+    district: "ВАО",
+    distKm: 7,
+    coverKm: "15 км",
+    coverVal: 15,
+    surface: 8,   surfaceLbl: "Асфальт + грунт",
+    relief: 4,    reliefLbl: "Ровный",
+    crowd: 5,     crowdLbl: "Умеренно",
+    light: 8,     lightLbl: "Хорошее",
+    nature: 8,    natureLbl: "Сосновый лес",
+    tags: [{t:"радиальные аллеи",g:true},{t:"беговые группы",g:true},{t:"аренда инвентаря",g:true}],
+    score: 7.7
+  },
+  {
+    rank: 12,
+    name: "Измайловский парк",
+    sub: "Измайлово",
+    district: "ВАО",
+    distKm: 11,
+    coverKm: "25 км",
+    coverVal: 25,
+    surface: 6,   surfaceLbl: "Грунт / лесные тропы",
+    relief: 5,    reliefLbl: "Умеренный",
+    crowd: 6,     crowdLbl: "Тихо в глубине",
+    light: 4,     lightLbl: "Только по краям",
+    nature: 9,    natureLbl: "Большой лес",
+    tags: [{t:"25 км троп",g:true},{t:"трейл-рельеф",g:true},{t:"лыжные трассы зимой",g:true},{t:"можно заблудиться",g:false}],
+    score: 7.6
+  },
+  {
+    rank: 13,
+    name: "Лосиный Остров",
+    sub: "Национальный парк",
+    district: "ВАО",
+    distKm: 13,
+    coverKm: "50+ км",
+    coverVal: 50,
+    surface: 5,   surfaceLbl: "Грунт / трейл",
+    relief: 6,    reliefLbl: "Разнообразный",
+    crowd: 9,     crowdLbl: "Пусто",
+    light: 1,     lightLbl: "Нет",
+    nature: 10,   natureLbl: "Дикий лес",
+    tags: [{t:"50+ км маршрутов",g:true},{t:"лоси",g:true},{t:"нет освещения",g:false},{t:"нужна навигация",g:false}],
+    score: 7.4
+  },
+  {
+    rank: 14,
+    name: "Тимирязевский парк",
+    sub: "Тимирязевский р-н",
+    district: "САО",
+    distKm: 8,
+    coverKm: "10 км",
+    coverVal: 10,
+    surface: 7,   surfaceLbl: "Грунт + асфальт",
+    relief: 5,    reliefLbl: "Пологий",
+    crowd: 7,     crowdLbl: "Умеренно",
+    light: 6,     lightLbl: "Частично",
+    nature: 8,    natureLbl: "Пруды, лес",
+    tags: [{t:"беговые маршруты",g:true},{t:"научный лес",g:true},{t:"пруды",g:true}],
+    score: 7.0
+  },
+  {
+    rank: 15,
+    name: "Серебряный Бор",
+    sub: "Хорошёво-Мнёвники",
+    district: "САО",
+    distKm: 10,
+    coverKm: "8 км",
+    coverVal: 8,
+    surface: 6,   surfaceLbl: "Грунт / песок",
+    relief: 4,    reliefLbl: "Ровный",
+    crowd: 5,     crowdLbl: "Многолюдно летом",
+    light: 4,     lightLbl: "Мало",
+    nature: 9,    natureLbl: "Сосновый лес, пляж",
+    tags: [{t:"сосновый лес",g:true},{t:"пляж летом",g:true},{t:"чистый воздух",g:true},{t:"пробки на въезде",g:false}],
+    score: 7.2
+  },
+  {
+    rank: 16,
+    name: "Парк Лазутиной (Одинцово)",
+    sub: "Одинцово, Подушкинский лес",
+    district: "МО",
+    distKm: 25,
+    coverKm: "18 км",
+    coverVal: 18,
+    surface: 9,   surfaceLbl: "Асфальт + грунт",
+    relief: 8,    reliefLbl: "Холмистый",
+    crowd: 8,     crowdLbl: "Мало людей",
+    light: 6,     lightLbl: "Трасса освещена",
+    nature: 9,    natureLbl: "Подушкинский лес",
+    tags: [{t:"лыжероллерная трасса",g:true},{t:"маркированные круги",g:true},{t:"ECO-маршруты",g:true},{t:"далеко от центра",g:false}],
+    score: 8.0
+  },
+  {
+    rank: 17,
+    name: "Троицкий лес (Одинцово)",
+    sub: "Одинцово, р-н Трёхгорки",
+    district: "МО",
+    distKm: 22,
+    coverKm: "6 км",
+    coverVal: 6,
+    surface: 5,   surfaceLbl: "Грунт",
+    relief: 6,    reliefLbl: "Умеренный",
+    crowd: 9,     crowdLbl: "Пусто",
+    light: 2,     lightLbl: "Нет",
+    nature: 8,    natureLbl: "Лес",
+    tags: [{t:"почти безлюдный",g:true},{t:"нет инфраструктуры",g:false}],
+    score: 6.0
+  },
+  {
+    rank: 18,
+    name: "Крылатское",
+    sub: "Крылатское",
+    district: "ЗАО",
+    distKm: 12,
+    coverKm: "14 км",
+    coverVal: 14,
+    surface: 9,   surfaceLbl: "Асфальт (кольцевая)",
+    relief: 7,    reliefLbl: "Холмы",
+    crowd: 6,     crowdLbl: "Умеренно",
+    light: 6,     lightLbl: "Частично",
+    nature: 7,    natureLbl: "Поля, река",
+    tags: [{t:"кольцевая 14 км",g:true},{t:"велотрек рядом",g:true},{t:"длинный темповый бег",g:true}],
+    score: 7.8
+  },
+  {
+    rank: 19,
+    name: "Москва-река (Строгино)",
+    sub: "Строгино",
+    district: "ЗАО",
+    distKm: 14,
+    coverKm: "7 км",
+    coverVal: 7,
+    surface: 8,   surfaceLbl: "Асфальт набережная",
+    relief: 2,    reliefLbl: "Плоский",
+    crowd: 7,     crowdLbl: "Тихо",
+    light: 7,     lightLbl: "Хорошее",
+    nature: 7,    natureLbl: "Река, острова",
+    tags: [{t:"набережная 7 км",g:true},{t:"купание летом",g:true},{t:"ровный темп",g:true}],
+    score: 7.1
+  },
+  {
+    rank: 20,
+    name: "Истринский лес",
+    sub: "Истра, МО",
+    district: "МО",
+    distKm: 60,
+    coverKm: "30+ км",
+    coverVal: 30,
+    surface: 5,   surfaceLbl: "Грунт / трейл",
+    relief: 8,    reliefLbl: "Холмистый",
+    crowd: 10,    crowdLbl: "Почти никого",
+    light: 1,     lightLbl: "Нет",
+    nature: 10,   natureLbl: "Дикий лес + водохр.",
+    tags: [{t:"дикий трейл",g:true},{t:"водохранилище",g:true},{t:"далеко — 60 км",g:false},{t:"нет инфраструктуры",g:false}],
+    score: 6.8
+  }
+];
+
+const badgeClass = {
+  "ЗАО": "badge-w", "ЮЗАО": "badge-sw", "ЦАО": "badge-c",
+  "САО": "badge-n", "ВАО": "badge-e", "МО": "badge-mo"
+};
+
+function renderBar(val, max=10, color='var(--accent)') {
+  const pct = (val / max) * 100;
+  const barColor = val <= 3 ? 'var(--accent2)' : val <= 5 ? '#ffb432' : color;
+  return `<div class="score-bar"><div class="score-fill" style="width:${pct}%;background:${barColor}"></div></div>`;
+}
+
+function renderRow(p, idx) {
+  const tags = p.tags.map(t =>
+    `<span class="tag ${t.g ? 'tag-good' : 'tag-warn'}">${t.t}</span>`
+  ).join('');
+
+  return `<tr data-district="${p.district}" data-score="${p.score}" data-dist="${p.distKm}" data-cover="${p.coverVal}" data-rank="${p.rank}">
+    <td class="col-rank">${p.rank}</td>
+    <td class="col-name">${p.name}<small>${p.sub}</small></td>
+    <td><span class="badge ${badgeClass[p.district]}">${p.district}</span></td>
+    <td class="col-dist"><span class="dist-val">${p.distKm}</span> км</td>
+    <td class="score-cell"><div class="score-num">${p.coverKm}</div>${renderBar(Math.min(p.coverVal, 30), 30)}</td>
+    <td class="score-cell"><div class="score-num">${p.surfaceLbl}</div>${renderBar(p.surface)}</td>
+    <td class="score-cell"><div class="score-num">${p.reliefLbl}</div>${renderBar(p.relief)}</td>
+    <td class="score-cell"><div class="score-num">${p.crowdLbl}</div>${renderBar(p.crowd)}</td>
+    <td class="score-cell"><div class="score-num">${p.lightLbl}</div>${renderBar(p.light)}</td>
+    <td class="score-cell"><div class="score-num">${p.natureLbl}</div>${renderBar(p.nature)}</td>
+    <td><div class="tags">${tags}</div></td>
+    <td><div class="total-score">${p.score.toFixed(1)}</div></td>
+  </tr>`;
+}
+
+function render(data) {
+  document.getElementById('tableBody').innerHTML = data.map((p, i) => renderRow(p, i)).join('');
+  document.getElementById('countShown').textContent = data.length;
+}
+
+let currentFilter = 'all';
+let currentSort = 'rank';
+
+function applyFiltersAndSort() {
+  let data = [...parks];
+  if (currentFilter !== 'all') {
+    data = data.filter(p => p.district === currentFilter);
+  }
+  if (currentSort === 'score') data.sort((a,b) => b.score - a.score);
+  else if (currentSort === 'dist') data.sort((a,b) => a.distKm - b.distKm);
+  else if (currentSort === 'cover') data.sort((a,b) => b.coverVal - a.coverVal);
+  else data.sort((a,b) => a.rank - b.rank);
+  render(data);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    applyFiltersAndSort();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', (e) => {
+  currentSort = e.target.value;
+  applyFiltersAndSort();
+});
+
+render(parks);
+</script>
+</body>
+</html>
