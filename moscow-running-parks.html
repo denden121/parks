@@ -299,6 +299,130 @@
     color: var(--muted);
   }
 
+  /* CITY TRAIL SECTION */
+  .ct-section {
+    border-top: 2px solid var(--accent);
+    padding: 40px 32px 32px;
+    background: var(--surface);
+  }
+  .ct-header { margin-bottom: 28px; }
+  .ct-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ct-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .ct-title span { color: var(--accent); }
+  .ct-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .ct-meta a { color: var(--accent); text-decoration: none; }
+  .ct-meta a:hover { text-decoration: underline; }
+
+  .ct-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .ct-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+    display: flex;
+    gap: 16px;
+    transition: border-color 0.15s;
+  }
+  .ct-card:hover { border-color: rgba(200,241,53,0.3); }
+  .ct-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: rgba(200,241,53,0.15);
+    line-height: 1;
+    min-width: 42px;
+    padding-top: 2px;
+  }
+  .ct-card:hover .ct-num { color: rgba(200,241,53,0.4); }
+  .ct-info { flex: 1; }
+  .ct-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+  .ct-park {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .ct-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .ct-dists { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+  .ct-d {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .ct-d-basic { background: rgba(100,180,255,0.1); color: #64b4ff; border: 1px solid rgba(100,180,255,0.2); }
+  .ct-d-med   { background: rgba(200,241,53,0.08); color: var(--accent); border: 1px solid rgba(200,241,53,0.2); }
+  .ct-d-hard  { background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); }
+  .ct-d-boss  { background: rgba(180,80,255,0.1); color: #c050ff; border: 1px solid rgba(180,80,255,0.2); }
+  .ct-d-extra { background: rgba(255,50,80,0.1); color: #ff3250; border: 1px solid rgba(255,50,80,0.2); }
+
+  .ct-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .ct-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    background: var(--tag-bg);
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .ct-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,241,53,0.06); }
+  .ct-btn-reg { border-color: rgba(200,241,53,0.3); color: var(--accent); background: rgba(200,241,53,0.06); }
+  .ct-btn-reg:hover { background: rgba(200,241,53,0.14); }
+
+  .ct-footer { text-align: center; margin-top: 8px; }
+  .ct-btn-pass {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 10px 24px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    color: var(--accent);
+    text-decoration: none;
+    background: rgba(200,241,53,0.06);
+    display: inline-block;
+    letter-spacing: 1px;
+    transition: background 0.15s;
+  }
+  .ct-btn-pass:hover { background: rgba(200,241,53,0.14); }
+
   @media (max-width: 640px) {
     .header, .controls, .legend, .count-info { padding-left: 16px; padding-right: 16px; }
     h1 { font-size: 38px; }
@@ -353,6 +477,135 @@
 <tbody id="tableBody">
 </tbody>
 </table>
+</div>
+
+<div class="ct-section">
+  <div class="ct-header">
+    <div class="ct-label">СЕРИЯ ТРЕЙЛОВЫХ СТАРТОВ · МОСКВА И ПОДМОСКОВЬЕ</div>
+    <div class="ct-title">CITY TRAIL <span>2026</span></div>
+    <div class="ct-meta">6 этапов · Wild Trail · <a href="https://city-trail.ru/" target="_blank" rel="noopener">city-trail.ru</a> · GPX-треки публикуются за 3 дня до старта</div>
+  </div>
+  <div class="ct-grid">
+
+    <div class="ct-card">
+      <div class="ct-num">01</div>
+      <div class="ct-info">
+        <div class="ct-name">Ромашково</div>
+        <div class="ct-park">Ромашковский лес, ЗАО / Подмосковье</div>
+        <div class="ct-date">24 мая 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic 4,8 км</span>
+          <span class="ct-d ct-d-med">Medium 12 км</span>
+          <span class="ct-d ct-d-hard">Hard 20 км</span>
+          <span class="ct-d ct-d-boss">Boss 31 км</span>
+          <span class="ct-d ct-d-extra">Extra 42 км</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/1" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1649" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-card">
+      <div class="ct-num">02</div>
+      <div class="ct-info">
+        <div class="ct-name">Бутово</div>
+        <div class="ct-park">Бутовский лесопарк, ЮАО</div>
+        <div class="ct-date">21 июня 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic ~5,5 км</span>
+          <span class="ct-d ct-d-med">Medium ~10 км</span>
+          <span class="ct-d ct-d-hard">Hard ~21 км</span>
+          <span class="ct-d ct-d-boss">Boss ~30 км</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/2" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1650" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-card">
+      <div class="ct-num">03</div>
+      <div class="ct-info">
+        <div class="ct-name">Битца</div>
+        <div class="ct-park">Битцевский лесопарк, ЮЗАО</div>
+        <div class="ct-date">12 июля 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic ~5 км</span>
+          <span class="ct-d ct-d-med">Medium ~10 км</span>
+          <span class="ct-d ct-d-hard">Hard ~20 км</span>
+          <span class="ct-d ct-d-boss">Boss ~29 км</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/3" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1651" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-card">
+      <div class="ct-num">04</div>
+      <div class="ct-info">
+        <div class="ct-name">Лосиный Остров</div>
+        <div class="ct-park">Национальный парк Лосиный Остров, СВАО</div>
+        <div class="ct-date">16 августа 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic ~5 км</span>
+          <span class="ct-d ct-d-med">Medium 10,4 км</span>
+          <span class="ct-d ct-d-hard">Hard ~15–20 км</span>
+          <span class="ct-d ct-d-boss">Boss ~25–28 км</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/4" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1652" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-card">
+      <div class="ct-num">05</div>
+      <div class="ct-info">
+        <div class="ct-name">Измайлово</div>
+        <div class="ct-park">Измайловский лесопарк, ВАО</div>
+        <div class="ct-date">27 сентября 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic ~5 км</span>
+          <span class="ct-d ct-d-med">Medium ~10 км</span>
+          <span class="ct-d ct-d-hard">Hard ~20 км</span>
+          <span class="ct-d ct-d-boss">Boss ~30 км</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/5" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1653" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-card">
+      <div class="ct-num">06</div>
+      <div class="ct-info">
+        <div class="ct-name">X-Race</div>
+        <div class="ct-park">X-Land Park, Подмосковье (Дмитровское ш.)</div>
+        <div class="ct-date">1 ноября 2026</div>
+        <div class="ct-dists">
+          <span class="ct-d ct-d-basic">Basic ~5 км</span>
+          <span class="ct-d ct-d-med">Medium ~10 км</span>
+          <span class="ct-d ct-d-hard">Hard ~20 км</span>
+          <span class="ct-d ct-d-boss">Boss ~33 км +580 м</span>
+        </div>
+        <div class="ct-links">
+          <a href="https://city-trail.ru/6" target="_blank" rel="noopener" class="ct-btn">Страница этапа + трек</a>
+          <a href="https://myrace.info/events/1654" target="_blank" rel="noopener" class="ct-btn ct-btn-reg">Регистрация</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="ct-footer">
+    <a href="https://myrace.info/events/1640" target="_blank" rel="noopener" class="ct-btn-pass">Абонемент на все 6 этапов →</a>
+  </div>
 </div>
 
 <div class="legend">
